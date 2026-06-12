@@ -1,0 +1,53 @@
+interface shortlist{
+    void findAll();
+    int findMax();
+}
+class PRODUCTS implements shortlist{
+    int[] costs={900,4500,200,1600};
+    void findcostsInRange(int min ,int max){
+        system.out.println("costs between"+min+"and"+max+":");
+       boolean found =false;
+       for(int c: costs){
+           if (c>=min && c<=max){
+               system.out.println(c); 
+               found=true;
+        }
+       }
+            if (!found){
+                system.out.println("No matching costs found.");
+            }
+  
+    }
+}
+public int findMax(){
+    int max=costs[0];
+    for(int c:costs){
+        if(c>max){
+            max=c;
+        }
+    }
+    return max;
+}
+
+public class APP{
+    public statiuc void main(string[]args){
+        PRODUCTS  p =new PRODUCTS();
+        P.findcostsInRange(500,2000);
+        p.findAll();
+        system.out.println("Maximum cost:"+p.findMax());
+    }
+}
+
+// MAIN CLASS APP (inherits everything)
+public class APP {
+    public static void main(String[] args) {
+
+        PRODUCTS p = new PRODUCTS();
+
+        // Call NON-ABSTRACT METHOD
+        p.findCostsInRange(500, 2000);
+
+        // Call ABSTRACT METHODS via implementation
+        p.findAll();
+        System.out.println("Maximum Cost: " + p.findMax());
+    }

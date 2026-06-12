@@ -1,0 +1,72 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Queue;
+
+
+public class BellmanShortestPAth{
+    private Map<Integer,List<NearBy>>adjacency;
+    private int size;
+    public BellmanShortestPath(int vSize){
+        this.size=vSize;
+        adjacency=new Hashtable<>();
+    }
+ 
+    public void build(int origin, int reach, int wt){
+        adjacency.putIfAbsent(origin, new ArrayList<>());
+        adjacency.get(origin).add(new NearBy(reach, wt));
+    }
+     public void findShort(int begin){
+        int[] distance = new int[size];
+        Arrays.fill(distance, Integer.MAX_VALUE);
+        distance[begin] = 0;
+        for(int times=1;times<size;times++){
+            if(adjacency.containsKey(begin)){
+                for(NearBy  each:adjacency.get(begin)){
+                    if(dist[origin]!=Integer.MAX_VALUE &&dist[origin]+each.weight<dist[each.neighbor]){
+                            dist[each.neighbor]=dist[origin]+each.weight;                                                                                                                                                               ]
+                    }
+                }
+            }
+        }
+        Queue<int[]> queue =
+        new PriorityQueue<>(Comparator.comparingInt(a->a[1]));
+        queue.offer(new int[]{begin,0});
+        // poll, compare and update, push
+        while(!queue.isEmpty()){
+            int[] polled = queue.poll();
+            int curVertex = polled[0], curWt = polled[1];
+            if(curWt>distance[curVertex]) continue;
+            // find neighbors
+            if(adjacency.containsKey(curVertex)){
+                for(NearBy each:adjacency.get(curVertex)){
+                    if(distance[curVertex]+each.weight < distance[each.neighbor]){
+                        distance[each.neighbor] = distance[curVertex]+each.weight;
+                        queue.offer((new int[]{each.neighbor,each.weight}));
+                    }
+                }
+            }
+        }
+        return distance;
+    }
+    public static void main(String[] args) {
+        DijkstraShortestPath path =
+        new BellmanShortestPAth(5);
+        path.build(0, 1, 19);
+        path.build(1, 2, 60);
+        path.build(0, 3, 94);
+        path.build(2, 4, 24);
+        path.build(2, 1, 23);
+        path.build(2, 3, 40);
+        path.findshort(begin:0);
+        System.out.println(path.adjacency);
+        int[] received = path.findShortest(0);
+        System.out.println(Arrays.toString(received));
+    }
+}
+
+}
